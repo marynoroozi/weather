@@ -1,66 +1,114 @@
-# Artwork Catalog React App - Design Decisions
+React Weather Application
+This is a React-based weather application that provides current weather data and 5-day/3-hour weather forecast using the OpenWeatherMap API. The app is built with TypeScript and includes models for different API responses, services for API calls, and a "Not Found" page for handling unknown routes. It also has unit tests written with Jest.
 
-## Overview
+Features
+Current Weather Data: Get real-time weather information based on geographic coordinates.
+5-day/3-hour Forecast: View weather forecasts for the next 5 days with data updated every 3 hours.
+Responsive Design: Works well on both desktop and mobile devices.
+Error Handling: Includes a "Not Found" page for unknown routes.
+Unit Testing: Includes tests for components and services using Jest.
+Technologies Used
+React
+TypeScript
+OpenWeatherMap API
+Axios for API calls
+Jest for testing
+React Router for routing
+Getting Started
+Follow these instructions to set up and run the project locally.
 
-The Artwork Catalog React App is designed to provide users with a responsive and functional interface for exploring a curated collection of artworks from the Art Institute of Chicago. This document outlines key design decisions made during the development of the application.
+Prerequisites
+Node.js (version 14.x or higher)
+npm (version 6.x or higher) or yarn (version 1.x or higher)
+Installation
+Clone the repository:
+bash
+Copy code
+git clone https://github.com/marynoroozi/weather-app.git
+cd weather-app
+Install dependencies:
+bash
+Copy code
+npm install
+# or
+yarn install
+Create a .env file in the root directory and add your OpenWeatherMap API key:
+makefile
+Copy code
+REACT_APP_API_KEY=your_openweathermap_api_key
+Running the Application
+Start the development server:
 
-## Technology Stack
+bash
+Copy code
+npm start
+# or
+yarn start
+Open your browser and navigate to http://localhost:3000.
 
-- React: Chosen for its component-based architecture, ease of development, and virtual DOM for efficient updates.
-- React Router: Implemented for client-side navigation, enabling seamless transitions between pages.
-- Axios: Utilized for making asynchronous HTTP requests to the Art Institute of Chicago's API.
-- Material UI: Employed for styling, ensuring a clean and responsive design across different devices.
-- Local State Management: React's local state is used for managing UI-related state within components.
+Running Tests
+Run the unit tests using Jest:
 
-## Component Structure
+bash
+Copy code
+npm test
+# or
+yarn test
+Project Structure
+java
+Copy code
+weather-app/
+├── public/
+├── src/
+│   ├── components/
+│   │   ├── CurrentWeather.tsx
+│   │   ├── Forecast.tsx
+│   │   └── NotFound.tsx
+│   ├── models/
+│   │   ├── CurrentWeather.ts
+│   │   └── Forecast.ts
+│   ├── services/
+│   │   └── weatherService.ts
+│   ├── App.tsx
+│   ├── index.tsx
+│   ├── App.test.tsx
+│   └── setupTests.ts
+├── .env
+├── package.json
+├── tsconfig.json
+└── README.md
+API Usage
+Current Weather Data
+To fetch current weather data:
 
-### Pages
+typescript
+Copy code
+import axios from 'axios';
 
-1. HomePage: Displays the paginated list of artworks with clickable titles and thumbnails.
-2. DetailPage: Presents detailed information about a selected artwork, including title, artist, date, main reference number, thumbnail, and dimensions.
-3. NotFoundPage: Renders a 404 error message for invalid routes.
+const getCurrentWeather = async (lat: number, lon: number) => {
+  const response = await axios.get(
+    `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${process.env.REACT_APP_API_KEY}`
+  );
+  return response.data;
+};
+5-day/3-hour Forecast Data
+To fetch 5-day/3-hour forecast data:
 
-### Components
+typescript
+Copy code
+import axios from 'axios';
 
-1. ArtworkList: Renders a paginated list of artworks with clickable titles and thumbnails.
-2. ArtworkDetail: Displays detailed information about a selected artwork.
-3. SearchFilter: Enables users to search artworks by title and filter results by category.
-4. CommentsForm: Demonstrates data validation with a simple form; does not persist data.
+const getForecast = async (lat: number, lon: number) => {
+  const response = await axios.get(
+    `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${process.env.REACT_APP_API_KEY}`
+  );
+  return response.data;
+};
+Contributing
+Contributions are welcome! Please open an issue or submit a pull request for any improvements or bug fixes.
 
-## Responsive Design
+License
+This project is licensed under the MIT License.
 
-- Media Queries: Applied to ensure the application renders appropriately on various screen sizes, providing an optimal user experience.
-- Flexbox and Grid Layouts: Used for creating responsive and flexible layouts without relying heavily on external libraries.
-
-## API Usage
-
-- Endpoints: Utilized the Art Institute of Chicago's API endpoints for retrieving lists of artworks, details of a specific artwork, and performing searches and filters.
-- Fields Parameter: Leveraged the fields parameter to optimize API requests by retrieving only the necessary data for each artwork.
-
-## Error Handling
-
-- HTTP Status Codes: Checked for different HTTP status codes in API responses to handle errors gracefully.
-- 404 Page: Implemented a custom 404 page for invalid routes.
-
-## Comments Form
-
-- Data Validation: Demonstrated data validation in the CommentsForm component, ensuring that user input is validated locally without making an API call to persist data.
-- Snackbar Component: Utilized a simple snackbar component to provide feedback on successful form submission or validation errors.
-
-## TypeScript (Optional)
-
-- *The React application utilizes TypeScript to enhance type safety and facilitate robust development practices, ensuring better code quality and developer productivity.
-
-## Code Quality
-
-- Modular Components: Emphasized the creation of reusable and modular components to enhance maintainability.
-- Consistent Naming Conventions: Followed consistent naming conventions for variables, functions, and components.
-
-## Future Considerations
-
-- Testing: Consider incorporating unit tests and end-to-end tests for improved code reliability.
-- State Management: Evaluate the introduction of state management libraries like Redux for more complex state requirements.
-
-## Conclusion
-
-The Artwork Catalog React App prioritizes functionality, code quality, and maintainability, ensuring a user-friendly experience for exploring artworks. Future improvements and enhancements can be considered based on user feedback and evolving requirements.
+Acknowledgements
+OpenWeatherMap API for providing weather data.
